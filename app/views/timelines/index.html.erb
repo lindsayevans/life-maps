@@ -1,0 +1,30 @@
+<h1>Listing timelines</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Public</th>
+    <th>Friendly url</th>
+    <th>Map api key</th>
+  </tr>
+
+<% for timeline in @timelines %>
+  <tr>
+    <td><%=h timeline.user_id %></td>
+    <td><%=h timeline.name %></td>
+    <td><%=h timeline.description %></td>
+    <td><%=h timeline.public %></td>
+    <td><%=h timeline.friendly_url %></td>
+    <td><%=h timeline.map_api_key %></td>
+    <td><%= link_to 'Show', timeline %></td>
+    <td><%= link_to 'Edit', edit_timeline_path(timeline) %></td>
+    <td><%= link_to 'Destroy', timeline, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New timeline', new_timeline_path %>

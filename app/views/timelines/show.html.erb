@@ -1,0 +1,33 @@
+<p>
+  <b>User:</b>
+  <%=h @timeline.user_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @timeline.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @timeline.description %>
+</p>
+
+<p>
+  <b>Public:</b>
+  <%=h @timeline.public %>
+</p>
+
+<p>
+  <b>Friendly url:</b>
+  <%=h @timeline.friendly_url %>
+</p>
+
+<p>
+  <b>Map api key:</b>
+  <%=h @timeline.map_api_key %>
+</p>
+
+
+<%= link_to 'Edit', edit_timeline_path(@timeline) %> |
+<%= link_to 'Back', timelines_path %>
