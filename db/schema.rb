@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080928014006) do
+ActiveRecord::Schema.define(:version => 20080928025737) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -35,5 +35,10 @@ ActiveRecord::Schema.define(:version => 20080928014006) do
   add_index "timelines", ["user_id"], :name => "index_timelines_on_user_id"
   add_index "timelines", ["friendly_url"], :name => "index_timelines_on_friendly_url"
   add_index "timelines", ["public"], :name => "index_timelines_on_public"
+
+  create_table "users", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
