@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
 
   map.resources :timelines
+  map.root :controller => :timelines
 
   # The priority is based upon order of creation: first created -> highest priority.
 
