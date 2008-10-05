@@ -30,12 +30,12 @@ class User < ActiveRecord::Base
     # Timelines stuff
     has_many :timelines
 
-    def can_edit? timeline
+    def can_edit?(timeline)
 	self == timeline.user
     end
 
-    def can_view? timeline
-	timeline.public || can_edit? timeline
+    def can_view?(timeline)
+	timeline.public || can_edit?(timeline)
     end
 
 
