@@ -22,6 +22,14 @@ class User < ActiveRecord::Base
                                },
                       :default_url => "/images/default_avatar_:style.gif",
                       :whiny_thumbnails => true
+
+  def can_view?(timeline)
+   timeline.public || can_edit?(timeline)
+  end
+
+  def can_edit?(timeline)
+   self.admin || timeline.user == self
+  end
  
   def remember_token?
     remember_token_expires_at && Time.now.utc < remember_token_expires_at

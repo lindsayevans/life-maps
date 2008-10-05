@@ -1,6 +1,6 @@
 <p>
   <b>User:</b>
-  <%=h @timeline.user_id %>
+  <%= link_to @timeline.user.nick_name, @timeline.user %>
 </p>
 
 <p>
@@ -14,11 +14,6 @@
 </p>
 
 <p>
-  <b>Public:</b>
-  <%=h @timeline.public %>
-</p>
-
-<p>
   <b>Friendly url:</b>
   <%=h @timeline.friendly_url %>
 </p>
@@ -29,5 +24,4 @@
 </p>
 
 
-<%= link_to 'Edit', edit_timeline_path(@timeline) %> |
-<%= link_to 'Back', timelines_path %>
+<%= link_to 'Edit timeline', edit_timeline_path(@timeline) if @timeline.can_be_edited_by(current_user) %>
