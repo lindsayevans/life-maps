@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
         render :action => 'new'
       else
         self.current_user = user_identity_url.user
-        redirect_back_or_default(home_path)
+        redirect_back_or_default(root_path)
         session[:return_to] = nil
       end
     end
@@ -30,6 +30,6 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(home_path)
+    redirect_back_or_default(root_path)
   end
 end

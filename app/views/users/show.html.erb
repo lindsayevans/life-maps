@@ -2,3 +2,11 @@
 
 <h2><%= @user.full_name -%></h2>
 <p><%= @user.nick_name -%></p>
+
+<% if !@user.timelines.empty? then %>
+<h3><%= @user.nick_name -%>'s Timelines</h3>
+<ul><% @user.timelines.each do |timeline| %>
+    <li><%= link_to timeline.name, timeline_path(timeline) -%></li><% end %>
+</ul>
+
+<% end %>
