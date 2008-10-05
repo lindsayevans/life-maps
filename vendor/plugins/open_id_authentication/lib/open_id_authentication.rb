@@ -150,6 +150,12 @@ module OpenIdAuthentication
     def open_id_redirect_url(open_id_request, return_to = nil, method = nil)
       open_id_request.return_to_args['_method'] = (method || request.method).to_s
       open_id_request.return_to_args['open_id_complete'] = '1'
+      if (method || request.method).to_s != 'get'
+        begin
+          open_id_request.return_to_args[request_forgery_protection_token.to_s] = form_authenticity_token
+        rescue ActionController::InvalidAuthenticityToken
+        end
+      end
       open_id_request.redirect_url(root_url, return_to || requested_url)
     end
 
@@ -157,7 +163,7 @@ module OpenIdAuthentication
       relative_url_root = self.class.respond_to?(:relative_url_root) ?
         self.class.relative_url_root.to_s :
         request.relative_url_root
-      "#{request.protocol + request.host_with_port + relative_url_root + request.path}"
+      "#{request.protocol + request.host_with_port + request.relative_url_root.to_s + request.path}"
     end
 
     def timeout_protection_from_identity_server

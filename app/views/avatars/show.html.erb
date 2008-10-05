@@ -1,0 +1,58 @@
+<p>
+  <b>Temp user:</b>
+  <%=h @avatar.temp_user_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @avatar.user_id %>
+</p>
+
+<p>
+  <b>Parent:</b>
+  <%=h @avatar.parent_id %>
+</p>
+
+<p>
+  <b>Content type:</b>
+  <%=h @avatar.content_type %>
+</p>
+
+<p>
+  <b>Filename:</b>
+  <%=h @avatar.filename %>
+</p>
+
+<p>
+  <b>Thumbnail:</b>
+  <%=h @avatar.thumbnail %>
+</p>
+
+<p>
+  <b>Size:</b>
+  <%=h @avatar.size %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @avatar.width %>
+</p>
+
+<p>
+  <b>Height:</b>
+  <%=h @avatar.height %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @avatar.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%=h @avatar.updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_avatar_path(@avatar) %> |
+<%= link_to 'Back', avatars_path %>

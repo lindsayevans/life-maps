@@ -1,54 +1,87 @@
-require 'digest/sha1'
-
+require 'uri'
+ 
 class User < ActiveRecord::Base
-  include Authentication
-  include Authentication::ByPassword
-  include Authentication::ByCookieToken
-
-  validates_presence_of     :login
-  validates_length_of       :login,    :within => 3..40
-  validates_uniqueness_of   :login
-  validates_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
-
-  validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
-  validates_length_of       :name,     :maximum => 100
-
-  validates_presence_of     :email
-  validates_length_of       :email,    :within => 6..100 #r@a.wk
-  validates_uniqueness_of   :email
-  validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
-
+  # From http://www.igvita.com/2006/09/07/validating-url-in-ruby-on-rails/
+  URI_FORMAT = /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   
+  has_many :timelines
 
-  # HACK HACK HACK -- how to do attr_accessible from here?
-  # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :name, :password, :password_confirmation
-
-
-
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  #
-  # uff.  this is really an authorization, not authentication routine.  
-  # We really need a Dispatch Chain here or something.
-  # This will also let us return a human error message.
-  #
-  def self.authenticate(login, password)
-    return nil if login.blank? || password.blank?
-    u = find_by_login(login) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
+  has_many :identity_urls, :dependent => :destroy
+  
+  validates_presence_of :full_name, :nick_name, :email
+  validates_uniqueness_of :email, :case_sensitive => false
+  validates_uniqueness_of :nick_name
+  validates_format_of :website_url, :with => URI_FORMAT, :allow_nil => true
+  
+  has_attached_file :avatar,
+                    :styles => {
+                                 :large => '140x140>',
+                                 :medium => '82x82>',
+                                 :small => '50x50>',
+                                 :tiny => '25x25>'
+                               },
+                      :default_url => "/images/default_avatar_:style.gif",
+                      :whiny_thumbnails => true
+ 
+  def remember_token?
+    remember_token_expires_at && Time.now.utc < remember_token_expires_at
   end
-
-  def login=(value)
-    write_attribute :login, (value ? value.downcase : nil)
+ 
+  # These create and unset the fields required for remembering users between browser closes
+  def remember_me
+    self.remember_token_expires_at = 2.weeks.from_now.utc
+    self.remember_token = encrypt("#{email}--#{remember_token_expires_at}")
+    save(false)
   end
-
-  def email=(value)
-    write_attribute :email, (value ? value.downcase : nil)
+ 
+  def forget_me
+    self.remember_token_expires_at = nil
+    self.remember_token = nil
+    save(false)
   end
-
-  protected
-    
-
-
+  
+  def openid_sreg_fields=(sreg_response)
+    sreg_response && sreg_response.data.each_pair do |key,val|
+      self[self.class.attr_for_openid_sreg_field(key)] = val
+    end
+  end
+  
+  def website_display_name
+    if !website_name.blank?
+      website_name
+    else
+      website_url.sub('http://', '')
+    end
+  end
+  
+  def website_url=(new_website_url)
+    new_website_url = "http://#{new_website_url}" if new_website_url !~ /^https?:\/\//
+    write_attribute(:website_url, new_website_url)
+  end
+  
+  def to_param
+    nick_name
+  end
+  
+  def to_s
+    nick_name
+  end
+  
+  def to_recipient
+    %("#{self.full_name}" <#{self.email}>)
+  end
+  
+  def self.attr_for_openid_sreg_field(field)
+    {
+      "nickname" => "nick_name",
+      "email" => "email",
+      "fullname" => "full_name"
+    }[field]
+  end
+  
+  def validate_website_url
+    if self.website_url.strip.not.blank? && self.website_url !~ URI.regexp(['http', 'https'])
+      self.errors.add(:website_url, "is not valid")
+    end
+  end
 end

@@ -1,0 +1,40 @@
+<h1>Listing avatars</h1>
+
+<table>
+  <tr>
+    <th>Temp user</th>
+    <th>User</th>
+    <th>Parent</th>
+    <th>Content type</th>
+    <th>Filename</th>
+    <th>Thumbnail</th>
+    <th>Size</th>
+    <th>Width</th>
+    <th>Height</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+  </tr>
+
+<% for avatar in @avatars %>
+  <tr>
+    <td><%=h avatar.temp_user_id %></td>
+    <td><%=h avatar.user_id %></td>
+    <td><%=h avatar.parent_id %></td>
+    <td><%=h avatar.content_type %></td>
+    <td><%=h avatar.filename %></td>
+    <td><%=h avatar.thumbnail %></td>
+    <td><%=h avatar.size %></td>
+    <td><%=h avatar.width %></td>
+    <td><%=h avatar.height %></td>
+    <td><%=h avatar.created_at %></td>
+    <td><%=h avatar.updated_at %></td>
+    <td><%= link_to 'Show', avatar %></td>
+    <td><%= link_to 'Edit', edit_avatar_path(avatar) %></td>
+    <td><%= link_to 'Destroy', avatar, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New avatar', new_avatar_path %>

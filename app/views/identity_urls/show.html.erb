@@ -1,0 +1,13 @@
+<p>
+  <b>User:</b>
+  <%=h @identity_url.user_id %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @identity_url.url %>
+</p>
+
+
+<%= link_to 'Edit', edit_identity_url_path(@identity_url) %> |
+<%= link_to 'Back', identity_urls_path %>

@@ -1,0 +1,22 @@
+<h1>Listing identity_urls</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Url</th>
+  </tr>
+
+<% for identity_url in @identity_urls %>
+  <tr>
+    <td><%=h identity_url.user_id %></td>
+    <td><%=h identity_url.url %></td>
+    <td><%= link_to 'Show', identity_url %></td>
+    <td><%= link_to 'Edit', edit_identity_url_path(identity_url) %></td>
+    <td><%= link_to 'Destroy', identity_url, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New identity_url', new_identity_url_path %>
