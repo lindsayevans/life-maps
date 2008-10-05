@@ -5,7 +5,19 @@ class SessionsController < ApplicationController
   def new
   end
 
+
   def create
+
+    logout_keeping_session!
+
+    if using_open_id?
+      open_id_authentication
+    elsif params[:login]
+      password_authentication(params[:login], params[:password])
+    end
+  end
+
+  def create_old
     logout_keeping_session!
 
     user = User.authenticate(params[:login], params[:password])
