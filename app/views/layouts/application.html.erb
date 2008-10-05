@@ -4,17 +4,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title><%= params[:controller] -%>: <%= controller.action_name -%></title>
-  <%= stylesheet_link_tag 'scaffold' %>
+  <title><%= @page_title -%></title>
+  <%= stylesheet_link_tag 'frontend' %>
 </head>
-<body>
+<body<%= ' class="'+@body_id+'"' unless @body_id.nil? -%><%= ' class="'+@body_class+'"' unless @body_class.nil? -%>>
 
 <div id="header">
-  <h2>Life Maps</h2>
-  <%= render :partial => 'users/user_bar' %>
+<% if params[:controller] == 'pages' && params[:action] == 'home' then -%>
+  <h1>Life Maps</h1>
+<% else -%>
+  <h2><a href="/">Life Maps</a></h2>
+<% end -%>
+<%= render :partial => 'users/user_bar' %>
 </div>
 
-<p style="color: green"><%= flash[:notice] %></p>
+<% if flash.has_key?(:error) then -%><div class="error message"><%= flash[:error] %></div><% end -%>
+<% if flash.has_key?(:warning) then -%><div class="warning message"><%= flash[:warning] %></div><% end -%>
+<% if flash.has_key?(:notice) then -%><div class="notice message"><%= flash[:notice] %></div><% end -%>
 
 <%= yield  %>
 

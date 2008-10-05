@@ -41,6 +41,7 @@ class TimelinesController < ApplicationController
   # POST /timelines.xml
   def create
     @timeline = Timeline.new(params[:timeline])
+    @timeline.user = current_user
 
     respond_to do |format|
       if @timeline.save
@@ -58,6 +59,7 @@ class TimelinesController < ApplicationController
   # PUT /timelines/1.xml
   def update
     @timeline = Timeline.find(params[:id])
+    @timeline.user = current_user
 
     respond_to do |format|
       if @timeline.update_attributes(params[:timeline])

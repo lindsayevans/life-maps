@@ -1,0 +1,14 @@
+<h1>User details</h1>
+
+<%= error_messages_for :user %>
+<% form_for(:user, :url => update_profile_details_current_user_path, :html=>{:method=>:put}, :id => 'edit') do |f| -%>
+<p><%= label_tag 'user_nick_name', 'Nickname' %><br/>
+<%= f.text_field :nick_name %></p>
+<p><%= label_tag 'user_full_name', 'Full name' %><br/>
+<%= f.text_field :full_name %></p>
+<p><%= label_tag 'user_email', 'Email address' %><br/>
+<%= f.text_field :email %></p>
+
+<p><%= submit_tag 'Save' %></p>
+<% end -%>
+

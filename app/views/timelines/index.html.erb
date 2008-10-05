@@ -1,30 +1,31 @@
-<h1>Listing timelines</h1>
+<h1>Timelines</h1>
 
+<% if @timelines.empty? -%>
+<p>There aren't any timelines yet.</p>
+<% if logged_in? -%>
+<p>Why don't you <%= link_to('create one', new_timeline_path) %>?</p>
+<% else -%>
+<p>You could create one if you were <%= link_to 'signed up', new_user_path %>.</p>
+<% end -%>
+<% else -%>
 <table>
   <tr>
-    <th>User</th>
     <th>Name</th>
     <th>Description</th>
-    <th>Public</th>
-    <th>Friendly url</th>
-    <th>Map api key</th>
+    <th>User</th>
   </tr>
-
-<% for timeline in @timelines %>
+<% for timeline in @timelines -%>
   <tr>
-    <td><%=h timeline.user_id %></td>
-    <td><%=h timeline.name %></td>
+    <td><%= link_to timeline.name, timeline %></td>
     <td><%=h timeline.description %></td>
-    <td><%=h timeline.public %></td>
-    <td><%=h timeline.friendly_url %></td>
-    <td><%=h timeline.map_api_key %></td>
-    <td><%= link_to 'Show', timeline %></td>
-    <td><%= link_to 'Edit', edit_timeline_path(timeline) %></td>
-    <td><%= link_to 'Destroy', timeline, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to timeline.user.nick_name, timeline.user %></td>
   </tr>
-<% end %>
+<% end -%>
 </table>
 
-<br />
+<p>[pagination]</p>
 
-<%= link_to 'New timeline', new_timeline_path %>
+<%= link_to('New timeline', new_timeline_path) if logged_in? %>
+
+<% end -%>
+

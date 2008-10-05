@@ -2,11 +2,6 @@
 
 <% form_for(@timeline) do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </p>
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -28,9 +23,9 @@
     <%= f.text_field :map_api_key %>
   </p>
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit "Update timeline" %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @timeline %> |
-<%= link_to 'Back', timelines_path %>
+<%= link_to 'cancel', timelines_path %>
+<%= link_to 'view timeline', @timeline %>
