@@ -11,21 +11,29 @@
 
 ActiveRecord::Schema.define(:version => 20081005001734) do
 
-  create_table "users", :force => true do |t|
-    t.string   "login",                     :limit => 40
-    t.string   "name",                      :limit => 100, :default => ""
-    t.string   "email",                     :limit => 100
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
-    t.string   "activation_code",           :limit => 40
-    t.datetime "activated_at"
-    t.string   "identity_url"
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "timelines", :force => true do |t|
+    t.integer  "user_id",                        :null => false
+    t.string   "name",                           :null => false
+    t.text     "description"
+    t.string   "friendly_url",                   :null => false
+    t.string   "map_api_key"
+    t.boolean  "public",       :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "timelines", ["user_id"], :name => "index_timelines_on_user_id"
+  add_index "timelines", ["friendly_url"], :name => "index_timelines_on_friendly_url"
+  add_index "timelines", ["public"], :name => "index_timelines_on_public"
 
 end
