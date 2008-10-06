@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   URI_FORMAT = /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   
   has_many :timelines
+  has_many :places, :through => :timelines
 
   has_many :identity_urls, :dependent => :destroy
   

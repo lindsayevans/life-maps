@@ -3,8 +3,10 @@ class CreatePlaces < ActiveRecord::Migration
     create_table :places do |t|
       t.integer :timeline_id
       t.integer :user_id
+      t.integer :place_type_id
       t.string :name
-      t.point :coordinates
+      t.text :description
+      t.column :coordinates, :point # No sexy migrations for geometric types
       t.date :from_start
       t.date :from_end
       t.string :from_original
@@ -13,8 +15,6 @@ class CreatePlaces < ActiveRecord::Migration
       t.date :to_end
       t.string :to_original
       t.string :to_resolution
-      t.text :description
-      t.integer :place_type_id
 
       t.timestamps
     end

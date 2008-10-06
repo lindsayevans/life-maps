@@ -9,89 +9,115 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081005034619) do
+ActiveRecord::Schema.define(:version => 20081006003201) do
 
-  create_table "avatars", :force => true do |t|
-    t.integer  "temp_user_id"
-    t.integer  "user_id"
-    t.integer  "parent_id"
-    t.string   "content_type"
-    t.string   "filename"
-    t.string   "thumbnail"
-    t.integer  "size"
-    t.integer  "width"
-    t.integer  "height"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "avatars", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "temp_user_id", :integer
+    t.column "user_id", :integer
+    t.column "parent_id", :integer
+    t.column "content_type", :string
+    t.column "filename", :string
+    t.column "thumbnail", :string
+    t.column "size", :integer
+    t.column "width", :integer
+    t.column "height", :integer
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
   end
 
-  create_table "identity_urls", :force => true do |t|
-    t.integer  "user_id"
-    t.text     "url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "identity_urls", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "user_id", :integer
+    t.column "url", :text
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
   end
 
-  create_table "open_id_authentication_associations", :force => true do |t|
-    t.integer "issued"
-    t.integer "lifetime"
-    t.string  "handle"
-    t.string  "assoc_type"
-    t.binary  "server_url"
-    t.binary  "secret"
+  create_table "open_id_authentication_associations", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "issued", :integer
+    t.column "lifetime", :integer
+    t.column "handle", :string
+    t.column "assoc_type", :string
+    t.column "server_url", :binary
+    t.column "secret", :binary
   end
 
-  create_table "open_id_authentication_nonces", :force => true do |t|
-    t.integer "timestamp",  :null => false
-    t.string  "server_url"
-    t.string  "salt",       :null => false
+  create_table "open_id_authentication_nonces", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "timestamp", :integer, :null => false
+    t.column "server_url", :string
+    t.column "salt", :string, :null => false
   end
 
-  create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "place_types", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "name", :string
+    t.column "colour", :string
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+  end
+
+  create_table "places", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "timeline_id", :integer
+    t.column "user_id", :integer
+    t.column "place_type_id", :integer
+    t.column "name", :string
+    t.column "description", :text
+    t.column "coordinates", :point
+    t.column "from_start", :date
+    t.column "from_end", :date
+    t.column "from_original", :string
+    t.column "from_resolution", :string
+    t.column "to_start", :date
+    t.column "to_end", :date
+    t.column "to_original", :string
+    t.column "to_resolution", :string
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+  end
+
+  create_table "sessions", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "session_id", :string, :null => false
+    t.column "data", :text
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
-  create_table "timelines", :force => true do |t|
-    t.integer  "user_id",                        :null => false
-    t.string   "name",                           :null => false
-    t.text     "description"
-    t.string   "friendly_url",                   :null => false
-    t.string   "map_api_key"
-    t.boolean  "public",       :default => true
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "timelines", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "user_id", :integer, :null => false
+    t.column "name", :string, :null => false
+    t.column "description", :text
+    t.column "friendly_url", :string, :null => false
+    t.column "map_api_key", :string
+    t.column "public", :boolean, :default => true
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
   end
 
   add_index "timelines", ["user_id"], :name => "index_timelines_on_user_id"
   add_index "timelines", ["friendly_url"], :name => "index_timelines_on_friendly_url"
   add_index "timelines", ["public"], :name => "index_timelines_on_public"
 
-  create_table "users", :force => true do |t|
-    t.string   "login",                     :limit => 40
-    t.string   "name",                      :limit => 100, :default => ""
-    t.string   "email",                     :limit => 100
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.string   "nick_name"
-    t.string   "full_name"
-    t.text     "website_url"
-    t.string   "website_name"
-    t.string   "permalink"
-    t.boolean  "admin",                                    :default => false, :null => false
-    t.text     "description"
+  create_table "users", :options=>'ENGINE=MyISAM', :force => true do |t|
+    t.column "login", :string, :limit => 40
+    t.column "name", :string, :limit => 100, :default => ""
+    t.column "email", :string, :limit => 100
+    t.column "crypted_password", :string, :limit => 40
+    t.column "salt", :string, :limit => 40
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+    t.column "remember_token", :string, :limit => 40
+    t.column "remember_token_expires_at", :datetime
+    t.column "avatar_file_name", :string
+    t.column "avatar_content_type", :string
+    t.column "avatar_file_size", :integer
+    t.column "nick_name", :string
+    t.column "full_name", :string
+    t.column "website_url", :text
+    t.column "website_name", :string
+    t.column "permalink", :string
+    t.column "admin", :boolean, :default => false, :null => false
+    t.column "description", :text
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true

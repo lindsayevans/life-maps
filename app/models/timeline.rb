@@ -1,6 +1,8 @@
 class Timeline < ActiveRecord::Base
 
     belongs_to :user
+    has_many :places
+    has_many :place_types, :through => :places
 
     validates_uniqueness_of :friendly_url
     validates_presence_of :name
