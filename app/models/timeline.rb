@@ -8,7 +8,6 @@ class Timeline < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :user
 
-
   def can_be_edited_by(user)
     user.nil? ? false : user.can_edit?(self)
   end

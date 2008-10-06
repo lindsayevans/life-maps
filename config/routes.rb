@@ -1,12 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :place_types
-
-  map.resources :places
-
 
   map.root :controller => 'pages', :action => 'home'
 
-  map.resources :timelines
+  map.resources :timelines do |timelines|
+    timelines.resources :places
+  end
+
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
