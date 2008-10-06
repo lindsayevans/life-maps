@@ -1,12 +1,12 @@
 class Timeline < ActiveRecord::Base
 
-    belongs_to :user
-    has_many :places
-    has_many :place_types, :through => :places
+  belongs_to :user
+  has_many :places, :order => 'places.from_start ASC, places.from_end ASC'
+  has_many :place_types, :through => :places
 
-    validates_uniqueness_of :friendly_url
-    validates_presence_of :name
-    validates_presence_of :user
+  validates_uniqueness_of :friendly_url
+  validates_presence_of :name
+  validates_presence_of :user
 
 
   def can_be_edited_by(user)
