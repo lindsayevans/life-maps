@@ -3,9 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'pages', :action => 'home'
 
   map.resources :timelines do |timelines|
-    timelines.resources :places
+    timelines.resources :places, :name_prefix => 'timeline_'
   end
-
+  map.resources :places
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
