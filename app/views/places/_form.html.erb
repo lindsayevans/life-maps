@@ -1,0 +1,31 @@
+
+  <%= form.error_messages %>
+  <p>
+    <%= form.label :place_type_id %><br />
+    <%= form.collection_select :place_type_id, @place_types, :id, :name %>
+  </p>
+  <p>
+    <%= form.label :name %><br />
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.label :description %><br />
+    <%= form.text_area :description %>
+  </p>
+  <p>
+    <%= form.label :latitude %><br />
+    <%= form.text_field :latitude %>
+  </p>
+  <p>
+    <%= form.label :longitude %><br />
+    <%= form.text_field :longitude %>
+  </p>
+  <p>
+    <%= form.label :from_original, 'From date' %><br />
+    <%= form.text_field :from_original %>
+  </p>
+  <p>
+    <%= form.label :to_original, 'To date' %><br />
+    <%= form.text_field :to_original %>
+  </p>
+

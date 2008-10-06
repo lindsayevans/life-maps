@@ -1,35 +1,7 @@
 <h1>New place</h1>
 
 <% form_for(@place) do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :place_type %><br />
-    <%= f.collection_select :place_type, @place_types, :id, :name %>
-  </p>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.label :latitude %><br />
-    <%= f.text_field :latitude %>
-  </p>
-  <p>
-    <%= f.label :longitude %><br />
-    <%= f.text_field :longitude %>
-  </p>
-  <p>
-    <%= f.label :from_original, 'From date' %><br />
-    <%= f.text_field :from_original %>
-  </p>
-  <p>
-    <%= f.label :to_original, 'To date' %><br />
-    <%= f.text_field :to_original %>
-  </p>
+<%= render :partial => f %>
   <p>
     <%= f.submit "Create" %>
   </p>

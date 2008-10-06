@@ -1,12 +1,15 @@
 class Timeline < ActiveRecord::Base
 
   belongs_to :user
-  has_many :places, :order => 'places.from_start ASC, places.from_end ASC'
+  has_many :places, :dependent => :destroy, :order => 'places.from_start ASC, places.from_end ASC'
   has_many :place_types, :through => :places
 
   validates_uniqueness_of :friendly_url
   validates_presence_of :name
   validates_presence_of :user
+  validates_associated :places
+
+  after_update :save_places
 
   def can_be_edited_by(user)
     user.nil? ? false : user.can_edit?(self)
@@ -14,6 +17,29 @@ class Timeline < ActiveRecord::Base
 
   def can_be_viewed_by(user)
     user.nil? ? false : user.can_view?(self)
+  end
+
+  def existing_place_attributes=(place_attributes)
+    places.reject(&:new_record?).each do |place|
+      attributes = place_attributes[place.id.to_s]
+      if attributes
+        place.attributes = attributes
+      else
+        places.delete(place)
+      end
+    end
+  end
+
+  def new_place_attributes=(place_attributes)
+    place_attributes.each do |attributes|
+      places.build(attributes)
+    end
+  end
+
+  def save_places
+    places.each do |place|
+      place.save(false)
+    end
   end
 
 end

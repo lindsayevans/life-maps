@@ -23,5 +23,11 @@
   <%=h @timeline.map_api_key %>
 </p>
 
+<% unless @timeline.places.empty? -%>
+<ul id="places"><% @timeline.places.each do |place| -%>
+  <li><%= link_to place.name, place %></li><% end -%>
+</ul>
+<% end -%>
+
 
 <%= link_to 'Edit timeline', edit_timeline_path(@timeline) if @timeline.can_be_edited_by(current_user) %>

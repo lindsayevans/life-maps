@@ -1,4 +1,10 @@
 class TimelinesController < ApplicationController
+
+  before_filter :get_place_types
+  def get_place_types
+    @place_types = PlaceType.find :all
+  end
+
   # GET /timelines
   # GET /timelines.xml
   def index
@@ -25,6 +31,7 @@ class TimelinesController < ApplicationController
   # GET /timelines/new.xml
   def new
     @timeline = Timeline.new
+    @timeline.places.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -58,6 +65,7 @@ class TimelinesController < ApplicationController
   # PUT /timelines/1
   # PUT /timelines/1.xml
   def update
+    params[:timeline][:existing_place_attributes] ||= {}
     @timeline = Timeline.find(params[:id])
     @timeline.user = current_user
 

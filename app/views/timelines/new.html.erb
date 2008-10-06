@@ -1,27 +1,7 @@
 <h1>New timeline</h1>
 
 <% form_for(@timeline) do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.label :public %><br />
-    <%= f.check_box :public %>
-  </p>
-  <p>
-    <%= f.label :friendly_url %><br />
-    <%= f.text_field :friendly_url %>
-  </p>
-  <p>
-    <%= f.label :map_api_key %><br />
-    <%= f.text_field :map_api_key %>
-  </p>
+<%= render :partial => f %>
   <p>
     <%= f.submit "Create timeline" %>
   </p>

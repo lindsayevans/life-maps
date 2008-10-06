@@ -1,0 +1,29 @@
+  <%= error_messages_for :timeline %>
+  <p>
+    <%= form.label :name %><br />
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.label :description %><br />
+    <%= form.text_area :description %>
+  </p>
+  <p>
+    <%= form.label :public %><br />
+    <%= form.check_box :public %>
+  </p>
+  <p>
+    <%= form.label :friendly_url %><br />
+    <%= form.text_field :friendly_url %>
+  </p>
+  <p>
+    <%= form.label :map_api_key %><br />
+    <%= form.text_field :map_api_key %>
+  </p>
+
+  <fieldset id="places">
+    <legend>Places</legend>
+    <div class="add"><%= add_place_link 'Add a place' %></div>
+
+<%= render :partial => 'place', :collection => @timeline.places %>
+
+  </fieldset>

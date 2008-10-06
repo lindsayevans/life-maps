@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # From http://www.igvita.com/2006/09/07/validating-url-in-ruby-on-rails/
   URI_FORMAT = /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   
-  has_many :timelines
+  has_many :timelines, :dependent => :destroy
   has_many :places, :through => :timelines
 
   has_many :identity_urls, :dependent => :destroy

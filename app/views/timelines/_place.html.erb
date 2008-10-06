@@ -1,0 +1,11 @@
+  <div class="place">
+    <%= link_to_function 'remove', "$(this).up('.place').remove();" %>
+<%
+new_or_existing = place.new_record? ? 'new' : 'existing'
+prefix = "timeline[#{new_or_existing}_place_attributes][]"
+
+fields_for prefix, place do |place_form|
+-%>
+    <%= render :partial => 'places/form', :locals => {:form => place_form} %>
+<% end -%>
+  </div>
