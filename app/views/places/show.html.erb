@@ -1,0 +1,73 @@
+<p>
+  <b>Timeline:</b>
+  <%=h @place.timeline_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @place.user_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @place.name %>
+</p>
+
+<p>
+  <b>Coordinates:</b>
+  <%=h @place.coordinates %>
+</p>
+
+<p>
+  <b>From start:</b>
+  <%=h @place.from_start %>
+</p>
+
+<p>
+  <b>From end:</b>
+  <%=h @place.from_end %>
+</p>
+
+<p>
+  <b>From original:</b>
+  <%=h @place.from_original %>
+</p>
+
+<p>
+  <b>From resolution:</b>
+  <%=h @place.from_resolution %>
+</p>
+
+<p>
+  <b>To start:</b>
+  <%=h @place.to_start %>
+</p>
+
+<p>
+  <b>To end:</b>
+  <%=h @place.to_end %>
+</p>
+
+<p>
+  <b>To original:</b>
+  <%=h @place.to_original %>
+</p>
+
+<p>
+  <b>To resolution:</b>
+  <%=h @place.to_resolution %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @place.description %>
+</p>
+
+<p>
+  <b>Place type:</b>
+  <%=h @place.place_type_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_place_path(@place) %> |
+<%= link_to 'Back', places_path %>

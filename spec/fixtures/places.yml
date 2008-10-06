@@ -1,0 +1,33 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  timeline_id: 1
+  user_id: 1
+  name: MyString
+  coordinates: 
+  from_start: 2008-10-06
+  from_end: 2008-10-06
+  from_original: MyString
+  from_resolution: MyString
+  to_start: 2008-10-06
+  to_end: 2008-10-06
+  to_original: MyString
+  to_resolution: MyString
+  description: MyText
+  place_type_id: 1
+
+two:
+  timeline_id: 1
+  user_id: 1
+  name: MyString
+  coordinates: 
+  from_start: 2008-10-06
+  from_end: 2008-10-06
+  from_original: MyString
+  from_resolution: MyString
+  to_start: 2008-10-06
+  to_end: 2008-10-06
+  to_original: MyString
+  to_resolution: MyString
+  description: MyText
+  place_type_id: 1

@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :place_types
+
+  map.resources :places
+
 
   map.root :controller => 'pages', :action => 'home'
 
