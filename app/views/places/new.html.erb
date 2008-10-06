@@ -4,7 +4,7 @@
   <%= f.error_messages %>
   <p>
     <%= f.label :place_type %><br />
-    <%= f.text_field :place_type %>
+    <%= f.collection_select :place_type, @place_types, :id, :name %>
   </p>
   <p>
     <%= f.label :name %><br />
@@ -15,16 +15,20 @@
     <%= f.text_area :description %>
   </p>
   <p>
-    <%= f.label :coordinates %><br />
-    <%= f.text_field :coordinates %>
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude %>
   </p>
   <p>
-    <%= f.label :from %><br />
-    <%= f.date_select :from %>
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude %>
   </p>
   <p>
-    <%= f.label :to %><br />
-    <%= f.date_select :to %>
+    <%= f.label :from_original, 'From date' %><br />
+    <%= f.text_field :from_original %>
+  </p>
+  <p>
+    <%= f.label :to_original, 'To date' %><br />
+    <%= f.text_field :to_original %>
   </p>
   <p>
     <%= f.submit "Create" %>

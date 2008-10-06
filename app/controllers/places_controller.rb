@@ -1,4 +1,10 @@
 class PlacesController < ApplicationController
+
+  before_filter :get_place_types
+  def get_place_types
+    @place_types = PlaceType.find :all
+  end
+
   # GET /places
   # GET /places.xml
   def index
