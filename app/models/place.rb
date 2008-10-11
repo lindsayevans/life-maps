@@ -34,5 +34,8 @@ class Place < ActiveRecord::Base
     return days / divisor
   end
 
+  def find_close_places(distance=1, limit=5)
+    Place.find :all, :conditions => ["id != ? AND GLength(GeomFromText(CONCAT('LineString(? ?,',  X(coordinates), ' ', Y(coordinates),')'))) < ?", self[:id], self.latitude, self.longitude, distance], :limit => limit
+  end
 
 end

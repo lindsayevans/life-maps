@@ -24,8 +24,9 @@
 </p>
 
 <% unless @timeline.places.empty? -%>
+<h3>Places</h3>
 <ul id="places"><% @timeline.places.each do |place| -%>
-  <li><%= link_to place.name, place %></li><% end -%>
+  <li><%= link_to place.name, place %> ll=<%= place.latitude %>,<%= place.longitude %> (<%= place.from_original %> - <%= place.to_original %>)</li><% end -%>
 </ul>
 <% end -%>
 
