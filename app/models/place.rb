@@ -42,8 +42,7 @@ class Place < ActiveRecord::Base
   def find_close_places(distance=1000, limit=5)
     lat = self.latitude
     lon = self.longitude
-    sql = "
-SELECT *
+    sql = "SELECT *
 FROM places
 WHERE id != #{self[:id]}
   AND 6370997.0 * (2 * ATAN2(SQRT(POW(SIN(((#{lat} - X(coordinates)) * 0.0174532925199433)/2),2) + COS(X(coordinates) * 0.0174532925199433) * COS(#{lat} * 0.0174532925199433) * POW(SIN(((#{lon} - Y(coordinates)) * 0.0174532925199433)/2),2)), SQRT(1-(POW(SIN(((#{lat} - X(coordinates)) * 0.0174532925199433)/2),2) + COS(X(coordinates) * 0.0174532925199433) * COS(#{lat} * 0.0174532925199433) * POW(SIN(((#{lon} - Y(coordinates)) * 0.0174532925199433)/2),2))))) <= #{distance}

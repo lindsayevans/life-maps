@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081006003201) do
+ActiveRecord::Schema.define(:version => 20081012005429) do
 
   create_table "avatars", :options=>'ENGINE=MyISAM', :force => true do |t|
     t.column "temp_user_id", :integer
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20081006003201) do
     t.column "place_type_id", :integer
     t.column "name", :string
     t.column "description", :text
-    t.column "coordinates", :point
+    t.column "coordinates", :point, :null => false
     t.column "from_start", :date
     t.column "from_end", :date
     t.column "from_original", :string
@@ -72,6 +72,14 @@ ActiveRecord::Schema.define(:version => 20081006003201) do
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
   end
+
+  add_index "places", ["coordinates"], :name => "index_places_on_coordinates", :spatial=> true 
+  add_index "places", ["from_start"], :name => "index_places_on_from_start"
+  add_index "places", ["from_end"], :name => "index_places_on_from_end"
+  add_index "places", ["to_start"], :name => "index_places_on_to_start"
+  add_index "places", ["to_end"], :name => "index_places_on_to_end"
+  add_index "places", ["timeline_id"], :name => "index_places_on_timeline_id"
+  add_index "places", ["user_id"], :name => "index_places_on_user_id"
 
   create_table "sessions", :options=>'ENGINE=MyISAM', :force => true do |t|
     t.column "session_id", :string, :null => false
