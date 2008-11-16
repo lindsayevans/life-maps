@@ -71,14 +71,34 @@ module Linz
 		:autumn => {:start => '10/1/', :end => '12/31'},
 		:fall => {:start => '10/1/', :end => '12/31'}
 	    }
+	    decade_names = {
+		:naughties => 0,
+		:zeroes => 0,
+		:tens => 1,
+		:twenties => 2,
+		:thirties => 3,
+		:forties => 4,
+		:fifties => 5,
+		:sixties => 6,
+		:seventies => 7,
+		:eighties => 8,
+		:nineties => 9
+	    }
 
 	    if parts.length == 1 then # year/decade
                 decade_match = original.match /([0-9]{2,4})[^\s]*s/i
+                decade_in_words_match = original.match /([a-z]+es)/i
                 if !decade_match.nil? then #decade
 		    decade = decade_match[1]
                     is_decade = true
                     resolution = :decade
                     start_date = Chronic.parse '1/1/' + decade
+                    end_date = (Chronic.parse('1/1/'+(start_date.year+10).to_s).to_date-1).to_time
+                elsif !decade_in_words_match.nil? then #decade in words
+		    decade = decade_names[decade_in_words_match[1].to_sym] * 10
+                    is_decade = true
+                    resolution = :decade
+                    start_date = Chronic.parse '1/1/' + decade.to_s
                     end_date = (Chronic.parse('1/1/'+(start_date.year+10).to_s).to_date-1).to_time
                 else # year
                     is_year = true
