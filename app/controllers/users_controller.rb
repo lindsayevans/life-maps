@@ -15,6 +15,12 @@ class UsersController < ApplicationController
   end
   
   def verify
+    if allow_login_bypass? && params[:skip_login]
+        session[:verified_openid_details] = {:identity_url => normalize_url(params[:openid_url])}
+	redirect_to details_users_path
+	return
+    end
+
     if !using_open_id?
       redirect_to new_user_path
       return
@@ -90,4 +96,12 @@ class UsersController < ApplicationController
     @user.save!
     redirect_back_or_default user_path(@user)
   end
+
+
+  def allow_login_bypass?
+    ["development", "test"].include?(RAILS_ENV)
+  end
+  helper_method :allow_login_bypass?
+
+
 end
