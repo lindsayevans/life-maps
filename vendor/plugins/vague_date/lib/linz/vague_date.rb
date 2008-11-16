@@ -95,7 +95,7 @@ module Linz
                     start_date = Chronic.parse '1/1/' + decade
                     end_date = (Chronic.parse('1/1/'+(start_date.year+10).to_s).to_date-1).to_time
                 elsif !decade_in_words_match.nil? then #decade in words
-		    decade = decade_names[decade_in_words_match[1].to_sym] * 10
+		    decade = decade_names[decade_in_words_match[1].downcase.to_sym] * 10
                     is_decade = true
                     resolution = :decade
                     start_date = Chronic.parse '1/1/' + decade.to_s
