@@ -5,14 +5,16 @@ class SessionsController < ApplicationController
   end
  
   def create
-@openid_url = normalize_url(params[:openid_url])
-user_identity_url = IdentityUrl.find_by_url(@openid_url)
+
+    if allow_login_bypass? && params[:skip_login]
+	@openid_url = normalize_url(params[:openid_url])
+	user_identity_url = IdentityUrl.find_by_url(@openid_url)
 
         self.current_user = user_identity_url.user
         redirect_back_or_default(root_path)
         session[:return_to] = nil
-return
-
+	return
+    end
     if !using_open_id?
       redirect_to new_session_path
       return
@@ -40,4 +42,12 @@ return
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(root_path)
   end
+
+
+  def allow_login_bypass?
+    ["development", "test"].include?(RAILS_ENV)
+  end
+  helper_method :allow_login_bypass?
+
+
 end

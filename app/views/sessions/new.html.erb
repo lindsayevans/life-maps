@@ -8,5 +8,10 @@
 <p><%= label_tag 'remember_me', 'Remember me' %>
 <%= check_box_tag 'remember_me', '1', @remember_me %></p>
 
+<% if allow_login_bypass? %>
+<p><%= label_tag 'skip_login', 'Skip login' %>
+<%= check_box_tag 'skip_login', 'true', @skip_login %></p>
+<% end %>
+
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>
