@@ -71,6 +71,7 @@ class TimelinesController < ApplicationController
 
     respond_to do |format|
       if @timeline.update_attributes(params[:timeline])
+#return render :text => YAML::dump(@timeline.places)
         flash[:notice] = 'Timeline was successfully updated.'
         format.html { redirect_to(@timeline) }
         format.xml  { head :ok }

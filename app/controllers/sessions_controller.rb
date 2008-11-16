@@ -5,6 +5,14 @@ class SessionsController < ApplicationController
   end
  
   def create
+@openid_url = normalize_url(params[:openid_url])
+user_identity_url = IdentityUrl.find_by_url(@openid_url)
+
+        self.current_user = user_identity_url.user
+        redirect_back_or_default(root_path)
+        session[:return_to] = nil
+return
+
     if !using_open_id?
       redirect_to new_session_path
       return

@@ -39,14 +39,12 @@ module Linz
         def initialize startdate = DateTime.now, enddate = DateTime.now, resolution = :day, original = 'now'
             @start = startdate
             @end = enddate
-            @resolution = resolution
+            @resolution = resolution.to_s
             @original = original
         end
-=begin
         def to_s
             "<Linz:VagueDate resolution=\"#{self.resolution.to_s}\" original=\"#{self.original}\" start=\"#{self.start.strftime("%d/%m/%Y")}\" end=\"#{self.end.strftime("%d/%m/%Y")}\" />"
         end
-=end
 
 	def days
 	    seconds = self.end.to_i - self.start.to_i
@@ -74,8 +72,6 @@ module Linz
 		:fall => {:start => '10/1/', :end => '12/31'}
 	    }
 
-	    
-            
 	    if parts.length == 1 then # year/decade
                 decade_match = original.match /([0-9]{2,4})[^\s]*s/i
                 if !decade_match.nil? then #decade
@@ -95,12 +91,12 @@ module Linz
                 word_month_match = parts[0].match /([a-z]*)/i # word month
                 month_match = parts[0].match /([0-9]*)/i # numeric month
 		year_match = original.match /([0-9]{2,4})/i
+
                 if !season_match.nil? then
                     is_season = true
                     resolution = :season
                     start_date = Chronic.parse seasons[season_match[1].downcase.to_sym][:start] + year_match[1]
                     end_date = Chronic.parse seasons[season_match[1].downcase.to_sym][:end] + year_match[1]
-puts start_date
                 elsif !word_month_match.nil? then
                     is_month = true
                     resolution = :month
@@ -114,9 +110,10 @@ puts start_date
                 end
             else # other
                 start_date = Chronic.parse original
+                end_date = Chronic.parse original
             end
             #end_date = start_date
-            #puts start_date.strftime '%d/%m/%Y'
+            #puts start_date.strftime('%d/%m/%Y') + ', ' + end_date.strftime('%d/%m/%Y')
             raise StandardError, "Invalid date format" if start_date.nil? || end_date.nil?
             return Linz::VagueDate.new(start_date, end_date, resolution, original)
         end
