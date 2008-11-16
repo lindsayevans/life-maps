@@ -22,8 +22,11 @@
 
   <fieldset id="places">
     <legend>Places</legend>
-    <div class="add"><%= add_place_link 'Add a place' %></div>
+    <div class="add" id="add-new-place">Add a place</div>
 
 <%= render :partial => 'place', :collection => @timeline.places %>
 
   </fieldset>
+
+  <%= javascript_include_tag '/insertions.rjs' %>
+  <%= javascript_include_tag 'edit_timeline' %>

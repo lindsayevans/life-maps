@@ -1,10 +1,5 @@
 class TimelinesController < ApplicationController
 
-  before_filter :get_place_types
-  def get_place_types
-    @place_types = PlaceType.find :all
-  end
-
   # GET /timelines
   # GET /timelines.xml
   def index

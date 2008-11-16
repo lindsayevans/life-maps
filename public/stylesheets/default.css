@@ -26,3 +26,9 @@ body {
 #content {
     padding: 10px;
 }
+
+.add {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

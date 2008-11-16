@@ -10,7 +10,7 @@
   </p>
   <p>
     <%= form.label :description %><br />
-    <%= form.text_area :description %>
+    <%= form.text_area :description, :rows => 5 %>
   </p>
   <p>
     <%= form.label :latitude %><br />
@@ -28,4 +28,3 @@
     <%= form.label :to_original, 'To date' %><br />
     <%= form.text_field :to_original %>
   </p>
-<%= form.hidden_field :timeline_id, :value => timeline_id %>

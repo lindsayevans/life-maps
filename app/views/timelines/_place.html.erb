@@ -6,6 +6,6 @@ prefix = "timeline[#{new_or_existing}_place_attributes][]"
 
 fields_for prefix, place do |place_form|
 -%>
-    <%= render :partial => 'places/form', :locals => {:form => place_form, :timeline_id => @timeline[:id]} %>
+    <%= render :partial => 'places/form', :locals => {:form => place_form} %>
 <% end -%>
   </div>

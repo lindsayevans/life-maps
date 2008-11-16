@@ -23,4 +23,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :avatar, :name_prefix => 'current_'
   map.resources :avatars, :member => {:crop => :any}
 
+  map.connect 'insertions.rjs', :controller => 'application', :action => 'insertions'
+
 end

@@ -7,6 +7,13 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
   before_filter :login_from_cookie
+
+
+  before_filter :get_place_types
+  def get_place_types
+    @place_types = PlaceType.find :all
+  end
+
  
   helper :all
   
@@ -22,6 +29,10 @@ class ApplicationController < ActionController::Base
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password
+
+  def insertions
+    render :template => 'application/insertions.js.rjs'
+  end
 
 
   protected
