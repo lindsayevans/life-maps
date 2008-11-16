@@ -6,7 +6,7 @@
 <%= text_field_tag 'openid_url', @identity_url.url, :id => 'openid_url' %></p>
 
 <% if allow_login_bypass? %>
-<p><%= label_tag 'skip_login', 'Skip OpenID authenticaion' %>
+<p><%= label_tag 'skip_login', 'Skip OpenID authentication' %>
 <%= check_box_tag 'skip_login', 'true', @skip_login %></p>
 <% end %>
 
