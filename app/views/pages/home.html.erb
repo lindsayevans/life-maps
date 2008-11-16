@@ -4,5 +4,7 @@
 <p>[about]</p>
 
 <h2>Latest timelines</h2>
-<ul>[latest timelines]</ul>
+<ul><% @latest_timelines.each do |timeline| %>
+    <li><%= link_to timeline[:name], timeline %></li><% end %>
+</ul>
 <p class="more"><%= link_to 'view all', timelines_path %></p>
