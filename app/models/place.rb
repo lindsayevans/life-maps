@@ -11,21 +11,21 @@ class Place < ActiveRecord::Base
   vague_date :to
 
   def latitude
-    coordinates.x unless coordinates.nil?
+    coordinates.lat unless coordinates.nil?
   end
 
   def latitude=(lat)
     @lat = lat
-    self.coordinates = Point.from_x_y(@lat,@lon) unless @lon.nil?
+    self.coordinates = Point.from_lon_lat(@lon,@lat) unless @lon.nil?
   end
 
   def longitude
-    coordinates.y unless coordinates.nil?
+    coordinates.lat unless coordinates.nil?
   end
 
   def longitude=(lon)
     @lon = lon
-    self.coordinates = Point.from_x_y(@lat,@lon) unless @lat.nil?
+    self.coordinates = Point.from_on_lat(@lon,@lat) unless @lat.nil?
   end
 
   def length divisor = 1
@@ -38,7 +38,7 @@ class Place < ActiveRecord::Base
     Place.find :all, :conditions => ["id != ? AND GLength(GeomFromText(CONCAT('LineString(? ?,',  X(coordinates), ' ', Y(coordinates),')'))) < ?", self[:id], self.latitude, self.longitude, distance], :limit => limit
   end
 
-  # Find close places by metres
+  # Find places within a certain distance
   def find_close_places(distance=1000, limit=5)
     lat = self.latitude
     lon = self.longitude
@@ -47,17 +47,13 @@ FROM places
 WHERE id != #{self[:id]}
   AND 6370997.0 * (2 * ATAN2(SQRT(POW(SIN(((#{lat} - X(coordinates)) * 0.0174532925199433)/2),2) + COS(X(coordinates) * 0.0174532925199433) * COS(#{lat} * 0.0174532925199433) * POW(SIN(((#{lon} - Y(coordinates)) * 0.0174532925199433)/2),2)), SQRT(1-(POW(SIN(((#{lat} - X(coordinates)) * 0.0174532925199433)/2),2) + COS(X(coordinates) * 0.0174532925199433) * COS(#{lat} * 0.0174532925199433) * POW(SIN(((#{lon} - Y(coordinates)) * 0.0174532925199433)/2),2))))) <= #{distance}
 LIMIT #{limit}"
+puts sql
     Place.find_by_sql sql
   end
 
+  # get the distance in metres between this place & another
   def distance place
-    lat = place.latitude
-    lon = place.longitude
-    sql = "SELECT name, AsText(coordinates),
-6370997.0 * (2 * ATAN2(SQRT(POW(SIN(((#{lat} - X(coordinates)) * 0.0174532925199433)/2),2) + COS(X(coordinates) * 0.0174532925199433) * COS(#{lat} * 0.0174532925199433) * POW(SIN(((#{lon} - Y(coordinates)) * 0.0174532925199433)/2),2)), SQRT(1-(POW(SIN(((#{lat} - X(coordinates)) * 0.0174532925199433)/2),2) + COS(X(coordinates) * 0.0174532925199433) * COS(#{lat} * 0.0174532925199433) * POW(SIN(((#{lon} - Y(coordinates)) * 0.0174532925199433)/2),2))))) AS distance_in_metres
-FROM places;"
-    t = ActiveRecord::Base.connection.execute sql
-    #t[0].distance_in_metres # TODO: do it
+    self.coordinates.spherical_distance(place.coordinates)
   end
 
 
