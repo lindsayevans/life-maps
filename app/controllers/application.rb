@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
 
     before_filter :setup_javascript
     def setup_javascript
-      @javascript_files = ['jquery-1.2.6', 'application']      
+      @javascript_files = ['jquery-1.2.6', 'jrails', 'application']      
     end
     
     def render_404
