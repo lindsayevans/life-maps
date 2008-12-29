@@ -27,6 +27,7 @@
 <%= render :partial => 'place', :collection => @timeline.places %>
 
   </fieldset>
-
-  <%= javascript_include_tag '/insertions.rjs' %>
-  <%= javascript_include_tag 'edit_timeline' %>
+<%
+@javascript_files << '/insertions.rjs'
+@javascript_files << 'edit_timeline'
+%>

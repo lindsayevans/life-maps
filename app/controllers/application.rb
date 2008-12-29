@@ -59,6 +59,11 @@ class ApplicationController < ActionController::Base
 	return false
       end
     end
+
+    before_filter :setup_javascript
+    def setup_javascript
+      @javascript_files = ['jquery-1.2.6', 'application']      
+    end
     
     def render_404
       render :file => "#{RAILS_ROOT}/public/404.html", :status => :not_found

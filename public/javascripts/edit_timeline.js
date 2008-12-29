@@ -1,3 +1,3 @@
 
 
-$('add-new-place').observe('click', insert_new_place);
+$('#add-new-place').click(insert_new_place);
