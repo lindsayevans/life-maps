@@ -11,7 +11,7 @@
 
 ActiveRecord::Schema.define(:version => 20081012005429) do
 
-  create_table "avatars", :options=>'ENGINE=MyISAM', :force => true do |t|
+  create_table "avatars", :force => true do |t|
     t.column "temp_user_id", :integer
     t.column "user_id", :integer
     t.column "parent_id", :integer
@@ -25,14 +25,14 @@ ActiveRecord::Schema.define(:version => 20081012005429) do
     t.column "updated_at", :datetime
   end
 
-  create_table "identity_urls", :options=>'ENGINE=MyISAM', :force => true do |t|
+  create_table "identity_urls", :force => true do |t|
     t.column "user_id", :integer
     t.column "url", :text
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
   end
 
-  create_table "open_id_authentication_associations", :options=>'ENGINE=MyISAM', :force => true do |t|
+  create_table "open_id_authentication_associations", :force => true do |t|
     t.column "issued", :integer
     t.column "lifetime", :integer
     t.column "handle", :string
@@ -41,13 +41,13 @@ ActiveRecord::Schema.define(:version => 20081012005429) do
     t.column "secret", :binary
   end
 
-  create_table "open_id_authentication_nonces", :options=>'ENGINE=MyISAM', :force => true do |t|
+  create_table "open_id_authentication_nonces", :force => true do |t|
     t.column "timestamp", :integer, :null => false
     t.column "server_url", :string
     t.column "salt", :string, :null => false
   end
 
-  create_table "place_types", :options=>'ENGINE=MyISAM', :force => true do |t|
+  create_table "place_types", :force => true do |t|
     t.column "name", :string
     t.column "colour", :string
     t.column "created_at", :datetime
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20081012005429) do
   add_index "places", ["timeline_id"], :name => "index_places_on_timeline_id"
   add_index "places", ["user_id"], :name => "index_places_on_user_id"
 
-  create_table "sessions", :options=>'ENGINE=MyISAM', :force => true do |t|
+  create_table "sessions", :force => true do |t|
     t.column "session_id", :string, :null => false
     t.column "data", :text
     t.column "created_at", :datetime
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(:version => 20081012005429) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
-  create_table "timelines", :options=>'ENGINE=MyISAM', :force => true do |t|
+  create_table "timelines", :force => true do |t|
     t.column "user_id", :integer, :null => false
     t.column "name", :string, :null => false
     t.column "description", :text
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(:version => 20081012005429) do
   add_index "timelines", ["friendly_url"], :name => "index_timelines_on_friendly_url"
   add_index "timelines", ["public"], :name => "index_timelines_on_public"
 
-  create_table "users", :options=>'ENGINE=MyISAM', :force => true do |t|
+  create_table "users", :force => true do |t|
     t.column "login", :string, :limit => 40
     t.column "name", :string, :limit => 100, :default => ""
     t.column "email", :string, :limit => 100

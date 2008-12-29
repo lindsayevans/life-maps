@@ -1,0 +1,3 @@
+page << 'function insert_new_place(){'
+    page.insert_html :bottom, :places, :partial => 'timelines/place', :object => Place.new
+page << '}'

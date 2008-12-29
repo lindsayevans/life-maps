@@ -1,6 +1,6 @@
 class CreatePlaces < ActiveRecord::Migration
   def self.up
-    create_table :places do |t|
+    create_table :places, :options => 'engine=MyISAM' do |t| # need MyISAM for spatial index on coordinates
       t.integer :timeline_id
       t.integer :user_id
       t.integer :place_type_id
