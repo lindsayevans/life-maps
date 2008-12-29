@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     timelines.resources :places, :name_prefix => 'timeline_'
   end
   map.resources :places
+  map.resources :place_types
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'

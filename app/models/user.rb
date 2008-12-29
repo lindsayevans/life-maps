@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
                       :default_url => "/images/default_avatar_:style.gif",
                       :whiny_thumbnails => true
 
+  def is_admin?
+    self.admin
+  end
+
   def can_view?(timeline)
    timeline.public || can_edit?(timeline)
   end

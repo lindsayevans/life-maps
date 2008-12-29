@@ -1,4 +1,7 @@
 class PlaceTypesController < ApplicationController
+
+  before_filter :check_is_admin
+
   # GET /place_types
   # GET /place_types.xml
   def index

@@ -51,6 +51,14 @@ class ApplicationController < ActionController::Base
        return false
      end
     end
+
+    def check_is_admin
+      if !current_user || !current_user.is_admin?
+	flash[:warning] = 'Sorry, you don\'t have permission to view that page'
+	redirect_to '/login'
+	return false
+      end
+    end
     
     def render_404
       render :file => "#{RAILS_ROOT}/public/404.html", :status => :not_found
